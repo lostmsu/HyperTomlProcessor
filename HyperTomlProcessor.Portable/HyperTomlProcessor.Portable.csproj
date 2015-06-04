@@ -54,9 +54,16 @@
     <Compile Include="..\HyperTomlProcessor\XUtils.cs">
       <Link>XUtils.cs</Link>
     </Compile>
+    <Compile Include="ArrayItem.cs" />
+    <Compile Include="Comment.cs" />
+    <Compile Include="KeyValue.cs" />
     <Compile Include="PortableParserWrappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Table.cs" />
+    <Compile Include="TableInfo.cs" />
+    <Compile Include="TableNode.cs" />
     <Compile Include="TableTree.cs" />
+    <Compile Include="TomlValue.cs" />
     <Compile Include="TomlWriter.cs" />
   </ItemGroup>
   <ItemGroup>

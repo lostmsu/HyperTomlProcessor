@@ -1,6 +1,6 @@
 ﻿namespace HyperTomlProcessor
 {
-    internal enum TomlItemType
+    public enum TomlItemType
     {
         None,
         BasicString,

@@ -17,85 +17,7 @@ namespace HyperTomlProcessor
             return string.Concat(source.SelectMany(_ => _));
         }
 
-        internal class TableInfo
-        {
-            public readonly string[] Name;
-            public readonly Comment Comment;
-            public readonly bool IsArrayOfTable;
-
-            public TableInfo(IEnumerable<IEnumerable<char>> name, Comment comment, bool isArrayOfTable)
-            {
-                this.Name = name.Select(x => string.Concat(x)).ToArray();
-                this.Comment = comment;
-                this.IsArrayOfTable = isArrayOfTable;
-            }
-        }
-
-        internal abstract class TableNode { }
-
-        internal class Comment : TableNode
-        {
-            public readonly string Text;
-
-            public Comment(IEnumerable<char> text)
-            {
-                this.Text = string.Concat(text);
-            }
-        }
-
-        internal class TomlValue
-        {
-            public readonly TomlItemType Type;
-            public readonly object Value;
-
-            public TomlValue(TomlItemType type, object value)
-            {
-                this.Type = type;
-                this.Value = value;
-            }
-        }
-
-        internal class ArrayItem
-        {
-            public readonly TomlValue Value;
-            public readonly IEnumerable<Comment> Before;
-            public readonly IEnumerable<Comment> After;
-
-            public ArrayItem(TomlValue value, IEnumerable<Comment> before, IEnumerable<Comment> after)
-            {
-                this.Value = value;
-                this.Before = before ?? Enumerable.Empty<Comment>();
-                this.After = after ?? Enumerable.Empty<Comment>();
-            }
-        }
-
-        internal class KeyValue : TableNode
-        {
-            public readonly string Key;
-            public readonly TomlValue Value;
-            public readonly Comment Comment;
-
-            public KeyValue(IEnumerable<char> key, TomlValue value, Comment comment)
-            {
-                this.Key = string.Concat(key);
-                this.Value = value;
-                this.Comment = comment;
-            }
-        }
-
-        internal class Table
-        {
-            public readonly TableInfo Info;
-            public readonly IEnumerable<TableNode> Content;
-
-            public Table(TableInfo info, IEnumerable<TableNode> content)
-            {
-                this.Info = info;
-                this.Content = content;
-            }
-        }
-
-        internal class ParseResult
+	    internal class ParseResult
         {
             public readonly IEnumerable<TableNode> RootNodes;
             public readonly IEnumerable<Table> Tables;
@@ -585,13 +507,13 @@ namespace HyperTomlProcessor
 		}
 #endif
 
-        private static FormatException ThrowFormatException(string message, ITokenStream<char> stream)
+        private static void ThrowFormatException(string message, ITokenStream<char> stream)
         {
             throw new FormatException(string.Join(" ", message,
                 stream.Current.Case(() => "", x => x.Item1.Convert((line, col) => string.Format("Line:{0} Column:{1}", line, col)))));
         }
 
-        internal static TableTree Deserialize(this Parser<char, ParseResult> parser, ITokenStream<char> stream)
+        public static TableTree Deserialize(this Parser<char, ParseResult> parser, ITokenStream<char> stream)
         {
             var result = parser(stream).Case(
                 (s, err) =>
