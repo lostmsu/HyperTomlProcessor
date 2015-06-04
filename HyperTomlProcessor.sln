@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperTomlProcessor", "HyperTomlProcessor\HyperTomlProcessor.csproj", "{44192FE8-19EB-41E5-BE49-5346937F7C26}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperTomlProcessor.Test.Cmd", "HyperTomlProcessor.Test.Cmd\HyperTomlProcessor.Test.Cmd.csproj", "{E50D8152-387C-4D8C-81FF-FC0FAA371DE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperTomlProcessor.Net40", "HyperTomlProcessor.Net40\HyperTomlProcessor.Net40.csproj", "{C2E79D20-2868-45FF-8D50-0E236A57AA90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperTomlProcessor.Portable", "HyperTomlProcessor.Portable\HyperTomlProcessor.Portable.csproj", "{32C82A6D-E4B3-41F5-AB54-1BD6D14A9EA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{C2E79D20-2868-45FF-8D50-0E236A57AA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2E79D20-2868-45FF-8D50-0E236A57AA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2E79D20-2868-45FF-8D50-0E236A57AA90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C82A6D-E4B3-41F5-AB54-1BD6D14A9EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C82A6D-E4B3-41F5-AB54-1BD6D14A9EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C82A6D-E4B3-41F5-AB54-1BD6D14A9EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C82A6D-E4B3-41F5-AB54-1BD6D14A9EA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

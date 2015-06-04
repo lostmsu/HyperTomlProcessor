@@ -5,10 +5,12 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Xml.Linq;
 
 namespace HyperTomlProcessor
 {
+#if !PORTABLE
+	using System.Xml.Linq;
+
     /// <summary>
     /// Represents a TOML table or array.
     /// </summary>
@@ -602,4 +604,5 @@ namespace HyperTomlProcessor
             return XUtils.GetStreamString(w => this.WriteTo(Toml.V04, w));
         }
     }
+#endif
 }

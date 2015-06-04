@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+#if !PORTABLE
 using System.Xml.Linq;
+#endif
 
 namespace HyperTomlProcessor
 {
@@ -11,7 +13,7 @@ namespace HyperTomlProcessor
         {
             InitializeValidNameTable();
         }
-
+#if !PORTABLE
         internal static readonly XNamespace NamespaceA = "item";
         internal static XAttribute PrefixA
         {
@@ -32,6 +34,7 @@ namespace HyperTomlProcessor
             return xe.Name.Namespace == NamespaceA
                 ? xe.Attribute("item").Value : xe.Name.LocalName;
         }
+#endif
 
         private static bool[] ValidFirstName;
         private static bool[] ValidName;
@@ -91,6 +94,7 @@ namespace HyperTomlProcessor
             }
         }
 
+#if !PORTABLE
         internal static string GetTypeAttr(XElement xe)
         {
             var type = xe.Attribute("type");
@@ -102,6 +106,7 @@ namespace HyperTomlProcessor
             var toml = xe.Attribute("toml");
             return toml != null ? (TomlItemType?)Enum.Parse(typeof(TomlItemType), toml.Value) : null;
         }
+#endif
 
         internal static string GetStreamString(Action<StreamWriter> write)
         {

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+#if !PORTABLE
 using System.Xml.Linq;
+#endif
 using Parseq;
 using Parseq.Combinators;
 
@@ -508,6 +510,7 @@ namespace HyperTomlProcessor
             }
         }
 
+#if !PORTABLE
         private static IEnumerable<object> ConvertContent(TomlValue value)
         {
             switch (value.Type)
@@ -575,34 +578,12 @@ namespace HyperTomlProcessor
             );
         }
 
-        private class TableTree
-        {
-            public readonly string[] FullName;
-            public readonly IEnumerable<TableNode> Nodes;
-            public readonly Dictionary<string, List<TableTree>> ArrayOfTables = new Dictionary<string, List<TableTree>>();
-            public readonly Dictionary<string, TableTree> Children = new Dictionary<string, TableTree>();
-
-            public TableTree(string[] fullName, IEnumerable<TableNode> nodes)
-            {
-                this.FullName = fullName;
-                this.Nodes = nodes ?? Enumerable.Empty<TableNode>();
-            }
-
-            public XElement ToXElement(string name)
-            {
-                var xe = CreateTableElement(name, this.Nodes);
-                foreach (var kvp in this.ArrayOfTables)
-                {
-                    xe.Add(XUtils.CreateElement(kvp.Key,
-                        new XAttribute("type", "array"),
-                        new XAttribute("toml", TomlItemType.Array.ToString()),
-                        kvp.Value.Select(t => t.ToXElement("item"))
-                    ));
-                }
-                xe.Add(this.Children.Select(kvp => kvp.Value.ToXElement(kvp.Key)));
-                return xe;
-            }
-        }
+		internal static XElement DeserializeXElement(this Parser<char, ParseResult> parser, ITokenStream<char> stream)
+		{
+			var tree = Deserialize(parser, stream);
+			return tree.ToXElement("root");
+		}
+#endif
 
         private static FormatException ThrowFormatException(string message, ITokenStream<char> stream)
         {
@@ -610,7 +591,7 @@ namespace HyperTomlProcessor
                 stream.Current.Case(() => "", x => x.Item1.Convert((line, col) => string.Format("Line:{0} Column:{1}", line, col)))));
         }
 
-        internal static XElement DeserializeXElement(this Parser<char, ParseResult> parser, ITokenStream<char> stream)
+        internal static TableTree Deserialize(this Parser<char, ParseResult> parser, ITokenStream<char> stream)
         {
             var result = parser(stream).Case(
                 (s, err) =>
@@ -662,7 +643,7 @@ namespace HyperTomlProcessor
                 }
             }
 
-            return root.ToXElement("root");
+            return root;
         }
     }
 }
