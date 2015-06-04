@@ -10,9 +10,9 @@ using Parseq;
 namespace HyperTomlProcessor
 {
     /// <summary>
-    /// Provides methods for converting between <see cref="XElement"/> and TOML.
+    /// Provides methods for converting between reading and writing TOML.
     /// </summary>
-    public class Toml
+    public sealed class Toml
     {
         //TODO: バージョン別書き出し
         internal Toml(TomlVersion version, Parser<char, TomlParser.ParseResult> parser)
@@ -59,6 +59,11 @@ namespace HyperTomlProcessor
                 return v04;
             }
         }
+
+		public TableTree Deserialize(IEnumerable<char> toml)
+		{
+			return this.parser.Deserialize(toml.AsStream());
+		}
 
 #if !PORTABLE
 		/// <summary>

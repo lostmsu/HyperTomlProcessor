@@ -1,14 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using Microsoft.CSharp.RuntimeBinder;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace HyperTomlProcessor.Test
+﻿namespace HyperTomlProcessor.Test
 {
+#if !PORTABLE
+	using System;
+	using System.Collections.Generic;
+	using System.Xml.Linq;
+	using Microsoft.CSharp.RuntimeBinder;
+	using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class DynamicTomlTest
     {
+		        [TestMethod]
+        public void NumberWithUnderscores()
+        {
+            var dt = DynamicToml.Parse(Toml.V04, "a = 1_2_3_4_5\nb = 9_224_617.445_991\nc = 1e1_00");
+            Assert.AreEqual(12345L, dt.a);
+            Assert.AreEqual(9224617.445991, dt.b);
+            Assert.AreEqual(1e+100, dt.c);
+        }
+
+        [TestMethod]
+        public void InlineTable()
+        {
+            var dt = DynamicToml.Parse(Toml.V04, @"
+name = { first = ""Tom"", last = ""Preston - Werner"" }
+point = { x = 1, y = 2 }
+arr = [{ x = 1, y = 2 }, { x = 2, y = 3}]");
+            Assert.AreEqual("Tom", dt.name.first);
+            Assert.AreEqual("Preston - Werner", dt.name.last);
+            Assert.AreEqual(1L, dt.point.x);
+            Assert.AreEqual(2L, dt.point.y);
+            Assert.AreEqual(1L, dt.arr[0].x);
+            Assert.AreEqual(2L, dt.arr[0].y);
+            Assert.AreEqual(2L, dt.arr[1].x);
+            Assert.AreEqual(3L, dt.arr[1].y);
+        }
+
         [TestMethod]
         public void ParseExample()
         {
@@ -99,4 +126,5 @@ namespace HyperTomlProcessor.Test
             TestObject.Test(obj);
         }
     }
+#endif
 }
