@@ -6,14 +6,14 @@ namespace HyperTomlProcessor
 	public class TableTree
 	{
 		public readonly string[] FullName;
-		public readonly IEnumerable<TableNode> Nodes;
+		public readonly ICollection<TableNode> Nodes;
 		public readonly Dictionary<string, List<TableTree>> ArrayOfTables = new Dictionary<string, List<TableTree>>();
 		public readonly Dictionary<string, TableTree> Children = new Dictionary<string, TableTree>();
 
 		public TableTree(string[] fullName, IEnumerable<TableNode> nodes)
 		{
 			this.FullName = fullName;
-			this.Nodes = nodes ?? Enumerable.Empty<TableNode>();
+			this.Nodes = (nodes ?? Enumerable.Empty<TableNode>()).ToList();
 		}
 
 #if !PORTABLE

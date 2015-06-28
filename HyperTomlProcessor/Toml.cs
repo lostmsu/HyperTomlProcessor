@@ -65,6 +65,11 @@ namespace HyperTomlProcessor
 			return this.parser.Deserialize(toml.AsStream());
 		}
 
+		public TableTree Deserialize(TextReader toml)
+		{
+			return this.parser.Deserialize(toml.AsStream());
+		}
+
 #if !PORTABLE
 		/// <summary>
 		/// Deserializes the TOML to an <see cref="XElement"/>.
