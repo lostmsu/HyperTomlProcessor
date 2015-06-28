@@ -70,6 +70,16 @@ namespace HyperTomlProcessor
 			return this.parser.Deserialize(toml.AsStream());
 		}
 
+		public void Serialize(TextWriter writer, TableTree toml)
+		{
+			if (writer == null)
+				throw new ArgumentNullException("writer");
+			if (toml == null)
+				throw new ArgumentNullException("toml");
+
+			throw new NotImplementedException();
+		}
+
 #if !PORTABLE
 		/// <summary>
 		/// Deserializes the TOML to an <see cref="XElement"/>.
